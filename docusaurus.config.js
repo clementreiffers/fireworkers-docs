@@ -104,7 +104,7 @@ const config = {
               },
               {
                 label: "GitHub",
-                href: "https://github.com/clementreiffers/worker-api",
+                to: "/blog#repositories"
               },
             ],
           },
