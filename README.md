@@ -1,6 +1,9 @@
 # Website
 
+This Website is hosted here: https://clementreiffers.github.io/octo-workers-docs/
+
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+
 
 ### Installation
 
