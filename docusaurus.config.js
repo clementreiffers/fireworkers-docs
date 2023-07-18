@@ -77,8 +77,8 @@ const config = {
           },
           { to: "/blog", label: "Blog", position: "left" },
           {
-            href: "https://github.com/clementreiffers/CfKubernetesArch",
             label: "GitHub",
+            to: "/blog/Octo%20Workers#repositories",
             position: "right",
           },
         ],
