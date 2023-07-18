@@ -1,32 +1,30 @@
-# The architecture
+# Architecture
 
+## Installation
 
-## Install it
+### Setup the Architecture
 
-### Install the Arch
+The entire project runs on Kubernetes, so you need to install all the necessary components before using it.
 
-The entire projects runs on Kubernetes, so need to install all the project before using it.
+To begin, clone this GitHub repository: `git clone https://github.com/clementreiffers/CfKubernetesArch.git`
 
-First, clone this GitHub Repository: `git clone https://github.com/clementreiffers/CfKubernetesArch.git`
+Next, execute the following commands: `cd CfKubernetesArch && make deploy`
 
-Then run the following commands: `cd CfKubernetesArch && make deploy`
+This will create all the required resources for using this architecture.
 
-it will create all you need to use this architecture.
+### Install FakeCfApi
 
-### Install the FakeCfApi
+The FakeCfApi is essential if you want to utilize the Wrangler CLI within this architecture.
 
-This API is needed if you want to use the [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/) in this 
-Architecture.
+Run: `kubectl apply -f https://raw.githubusercontent.com/clementreiffers/fake-cf-api/main/kubernetes/fake-cf-api.yaml`
 
-run : `kubectl apply -f https://raw.githubusercontent.com/clementreiffers/fake-cf-api/main/kubernetes/fake-cf-api.yaml`
+## Usage
 
-## Use it
+Once installed, you can create your first account on Octo Worker.
 
-once installed, create your first account on Octo Worker.
+Run: `kubectl apply -f https://raw.githubusercontent.com/clementreiffers/CfKubernetesArch/main/config/samples/api_v1_workeraccount.yaml`
 
-run : `kubectl apply -f https://raw.githubusercontent.com/clementreiffers/CfKubernetesArch/main/config/samples/api_v1_workeraccount.yaml`
-
-It will apply this resource : 
+It will apply this following resource :
 
 ```Yaml
 apiVersion: api.cf-worker/v1
