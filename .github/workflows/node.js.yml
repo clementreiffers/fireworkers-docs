@@ -21,10 +21,10 @@ jobs:
       with:
         node-version: 18.x
         cache: 'yarn'
-    - name: Install & Build
-      run: |
-        yarn
-        yarn build
+    - name: Install Dependencies
+      run: yarn
+    - name: Build Project
+      run: yarn build
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
