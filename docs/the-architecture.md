@@ -17,7 +17,7 @@ This will create all the required resources for using this architecture.
 
 ### Install FakeCfApi
 
-The FakeCfApi is essential if you want to utilize the Wrangler CLI within this architecture.
+The FakeCfApi is essential if you want to use the Wrangler CLI within this architecture.
 
 Run: `kubectl apply -f https://raw.githubusercontent.com/clementreiffers/fake-cf-api/main/kubernetes/fake-cf-api.yaml`
 
