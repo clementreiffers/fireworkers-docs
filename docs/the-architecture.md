@@ -9,7 +9,7 @@ sidebar_position: 2
 
 The entire project runs on Kubernetes, so you need to install all the necessary components before using it.
 
-To begin, clone this GitHub repository: `git clone https://github.com/clementreiffers/CfKubernetesArch.git`
+First, clone this GitHub repository: `git clone https://github.com/clementreiffers/CfKubernetesArch.git`
 
 Next, execute the following commands: `cd CfKubernetesArch && make deploy`
 
