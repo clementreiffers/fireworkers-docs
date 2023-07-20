@@ -150,7 +150,7 @@ flowchart TB
             JobBuilder --> |update| WorkerBundle
         end
     end
-    admin --> |Manage Deployment| FakeCfApi
+    admin --> |Manage Deployment| WranglerCLI --> FakeCfApi
     client --> |HTTP| Deployment
     
     
@@ -167,6 +167,7 @@ flowchart TB
     style Registry fill:#2596EC,color:white,stroke:white
     style admin fill:#2596EC,color:white,stroke:white
     style client fill:#2596EC,color:white,stroke:white
+    style WranglerCLI fill:#2596EC,color:white,stroke:white
 
     linkStyle 0 stroke:white,stroke-width:3
     linkStyle 1 stroke:white,stroke-width:3
@@ -180,5 +181,6 @@ flowchart TB
     linkStyle 9 stroke:white,stroke-width:3
     linkStyle 10 stroke:black,stroke-width:3
     linkStyle 11 stroke:black,stroke-width:3
+    linkStyle 12 stroke:black,stroke-width:3
 ```
 
