@@ -137,17 +137,17 @@ They will operate following this graph:
 ```mermaid
 flowchart TB
     subgraph Cloud
-        FakeCfApi --> BucketS3[(Bucket S3)]
-        BucketS3 --> JobBuilder
-        JobBuilder --> Registry
-        Registry --> Deployment
+        FakeCfApi --> |push code| BucketS3[(Bucket S3)]
+        BucketS3 --> |download code| JobBuilder
+        JobBuilder --> |push image| Registry
+        Registry --> |pull image| Deployment
         subgraph Kubernetes
-            FakeCfApi --> WorkerVersion
-            WorkerVersion --> WorkerRelease
-            WorkerRelease --> JobBuilder
-            WorkerAccount --> WorkerBundle
-            WorkerBundle --> Deployment
-            JobBuilder --> WorkerBundle
+            FakeCfApi --> |create| WorkerVersion
+            WorkerVersion --> |create or update|WorkerRelease
+            WorkerRelease --> |create| JobBuilder
+            WorkerAccount --> |create| WorkerBundle
+            WorkerBundle --> |create or update| Deployment
+            JobBuilder --> |update| WorkerBundle
         end
     end
     admin --> |Manage Deployment| FakeCfApi
