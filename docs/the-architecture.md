@@ -135,28 +135,50 @@ The entire architecture works with Kubernetes Operators.
 They will operate following this graph:
 
 ```mermaid
-flowchart LR
-    subgraph Kubernetes 
-        FakeCfApi
-        WorkerBundle
-        WorkerVersion
-        WorkerAccount
-        JobBuilder
-        WorkerRelease
-        Deployment
+flowchart TB
+    subgraph Cloud
+        FakeCfApi --> BucketS3[(Bucket S3)]
+        BucketS3 --> JobBuilder
+        JobBuilder --> Registry
+        Registry --> Deployment
+        subgraph Kubernetes
+            FakeCfApi --> WorkerVersion
+            WorkerVersion --> WorkerRelease
+            WorkerRelease --> JobBuilder
+            WorkerAccount --> WorkerBundle
+            WorkerBundle --> Deployment
+            JobBuilder --> WorkerBundle
+        end
     end
-    
     admin --> |Manage Deployment| FakeCfApi
     client --> |HTTP| Deployment
     
-    FakeCfApi --> WorkerVersion 
-    FakeCfApi --> BucketS3[(Bucket S3)]
-    WorkerVersion --> WorkerRelease 
-    WorkerRelease --> JobBuilder
-    BucketS3 --> JobBuilder 
-    JobBuilder --> Registry 
-    WorkerAccount --> WorkerBundle 
-    WorkerBundle --> Deployment 
-    Registry --> Deployment 
-    JobBuilder --> WorkerBundle 
+    
+    style FakeCfApi fill:#002654,color:white,stroke:white
+    style WorkerVersion fill:#002654,color:white,stroke:white
+    style WorkerRelease fill:#002654,color:white,stroke:white
+    style WorkerAccount fill:#002654,color:white,stroke:white
+    style WorkerBundle fill:#002654,color:white,stroke:white
+    style JobBuilder fill:#002654,color:white,stroke:white
+    style Deployment fill:#002654,color:white,stroke:white
+    style Kubernetes fill:#59C3D5,color:black,stroke:white
+    style Cloud fill:#D9F1F5,color:black,stroke:white
+    style BucketS3 fill:orange,color:black,stroke:white
+    style Registry fill:#2596EC,color:white,stroke:white
+    style admin fill:#2596EC,color:white,stroke:white
+    style client fill:#2596EC,color:white,stroke:white
+
+    linkStyle 0 stroke:white,stroke-width:3
+    linkStyle 1 stroke:white,stroke-width:3
+    linkStyle 2 stroke:white,stroke-width:3
+    linkStyle 3 stroke:white,stroke-width:3
+    linkStyle 4 stroke:white,stroke-width:3
+    linkStyle 5 stroke:white,stroke-width:3
+    linkStyle 6 stroke:white,stroke-width:3
+    linkStyle 7 stroke:white,stroke-width:3
+    linkStyle 8 stroke:white,stroke-width:3
+    linkStyle 9 stroke:white,stroke-width:3
+    linkStyle 10 stroke:black,stroke-width:3
+    linkStyle 11 stroke:black,stroke-width:3
 ```
+
