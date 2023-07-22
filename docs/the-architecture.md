@@ -132,27 +132,129 @@ you can change the `workerBundleName` and the WorkerAccount's `name` as you want
 ## How it works
 
 The entire architecture works with Kubernetes Operators.
-They will operate following this graph:
+They will operate following these graphs belows:
+
+### What do we need
+
+This graph defines our requirements as follows:
+
+1. It is crucial to use the same tools as Cloudflare for a fully manageable architecture, achieved through the use of the 
+WranglerCLI.
+2. The entire deployment process must be fully automated in the cloud. Therefore, we require the implementation of CI/CD
+to manage code deployment, leading to the creation of a deployment at the end.
+3. We seek a comprehensive architecture that is compatible with CDN.
 
 ```mermaid
 flowchart TB
     subgraph Cloud
-        FakeCfApi --> |push code| BucketS3[(Bucket S3)]
-        BucketS3 --> |download code| JobBuilder
-        JobBuilder --> |push image| Registry
-        Registry --> |pull image| Deployment
+        style Cloud fill:#D9F1F5,color:black,stroke:white
+        Reception--> Archive --> Compilation --> Deployment
+    end
+    admin --> WranglerCLI --> Cloud --> client
+
+    style admin fill:#2596EC,color:white,stroke:white
+    style WranglerCLI fill:#2596EC,color:white,stroke:white
+    style client fill:#2596EC,color:white,stroke:white
+    style Reception fill:#59C3D5,color:white,stroke:white
+    style Archive fill:#59C3D5,color:white,stroke:white
+    style Compilation fill:#59C3D5,color:white,stroke:white
+    style Deployment fill:#59C3D5,color:white,stroke:white
+```
+
+### Simplified Architecture
+
+To meet our requirements, we employ a Kubernetes Cluster with our custom Kubernetes Operators. These Kubernetes 
+Operators handle the entire CI/CD process for deploying customer code.
+Some versions, such as KubeEdge, are compatible with CDN, making them a suitable solution that aligns with our needs.
+
+```mermaid
+flowchart TB
+    admin --> |use| WranglerCLI --> Kubernetes
+    client --> |HTTP| Deployment
+    subgraph Cloud
+        Archive
+        Reception --> |upload code| Archive --> |download code| Compilation
         subgraph Kubernetes
+            Reception --> |create| Compilation --> |create or update| Deployment
+        end
+    end
+    
+    style Cloud fill:#D9F1F5,color:black,stroke:white
+    style Kubernetes fill:#80D1DE,color:white,stroke:white
+    style Archive fill:#80D1DE,color:white,stroke:white
+    style admin fill:#2596EC,color:white,stroke:white
+    style client fill:#2596EC,color:white,stroke:white
+    style WranglerCLI fill:#2596EC,color:white,stroke:white
+    style Reception fill:#59C3D5,color:white,stroke:white
+    style Compilation fill:#59C3D5,color:white,stroke:white
+    style Deployment fill:#59C3D5,color:white,stroke:white
+```
+
+### Complete Architecture
+
+This comprehensive architecture encompasses various Kubernetes Operators, each of which is described below:
+
+#### WorkerAccount
+
+The WorkerAccount serves as the initial resource that an administrator must create. It provides a reference to identify 
+the corresponding Deployment linked to this account.
+
+#### FakeCfApi
+
+The FakeCfApi receives codes sent by an admin and pushes them into an S3 Bucket. Subsequently, it creates a CRD 
+(Custom Resource Definition) called WorkerVersion, containing the project name and the S3 link.
+
+#### WorkerVersion
+
+The WorkerVersion consolidates the project name from the admin and stores the link to the S3 Bucket where the code is 
+retained. Its design facilitates future updates and allows for rollbacks, if necessary.
+
+#### WorkerRelease
+
+The WorkerRelease aggregates multiple WorkerVersions. Once it is created or updated, it triggers a JobBuilder to prepare
+a new deployment.
+
+#### JobBuilder
+
+The JobBuilder is created by the WorkerRelease. Once initiated, it generates a job utilizing Kaniko to construct a new 
+container for the subsequent deployment. After completion, it updates a WorkerBundle.
+
+#### WorkerBundle
+
+The WorkerBundle facilitates the complete deployment (including Deployment, Ingress, Service, HPA) of the project when 
+updated by the JobBuilder. It is initially created by the WorkerAccount.
+
+```mermaid
+flowchart TB
+    subgraph Cloud
+        subgraph Archive
+            style Archive fill:#80D1DE,color:black,stroke:white
+            BucketS3 & Registry
+        end
+        subgraph Kubernetes
+            
             FakeCfApi --> |create| WorkerVersion
-            WorkerVersion --> |create or update|WorkerRelease
-            WorkerRelease --> |create| JobBuilder
-            WorkerAccount --> |create| WorkerBundle
-            WorkerBundle --> |create or update| Deployment
             JobBuilder --> |update| WorkerBundle
+            WorkerAccount --> |create| WorkerBundle
+            subgraph Reception
+                FakeCfApi & WorkerAccount
+                FakeCfApi --> |push code| BucketS3[(S3 Bucket)]
+            end
+            subgraph Compilation
+                WorkerVersion --> |create or update|WorkerRelease
+                WorkerRelease --> |create| JobBuilder
+                BucketS3 --> |download code| JobBuilder
+                JobBuilder --> |push image| Registry
+            end
+            subgraph Deployment
+                Registry --> |pull image| ClientApp
+                WorkerBundle --> |create or update| ClientApp
+            end
         end
     end
     admin --> |Manage Deployment| WranglerCLI --> FakeCfApi
-    client --> |HTTP| Deployment
-    
+    admin --> |create Account| WorkerAccount
+    client --> |HTTP| ClientApp
     
     style FakeCfApi fill:#002654,color:white,stroke:white
     style WorkerVersion fill:#002654,color:white,stroke:white
@@ -160,14 +262,18 @@ flowchart TB
     style WorkerAccount fill:#002654,color:white,stroke:white
     style WorkerBundle fill:#002654,color:white,stroke:white
     style JobBuilder fill:#002654,color:white,stroke:white
-    style Deployment fill:#002654,color:white,stroke:white
-    style Kubernetes fill:#59C3D5,color:black,stroke:white
+    style ClientApp fill:#002654,color:white,stroke:white
+    style Kubernetes fill:#80D1DE,color:black,stroke:white
+    style Archive fill:#80D1DE,color:black,stroke:white
     style Cloud fill:#D9F1F5,color:black,stroke:white
     style BucketS3 fill:orange,color:black,stroke:white
     style Registry fill:#2596EC,color:white,stroke:white
     style admin fill:#2596EC,color:white,stroke:white
     style client fill:#2596EC,color:white,stroke:white
     style WranglerCLI fill:#2596EC,color:white,stroke:white
+    style Reception fill:#59C3D5,color:white,stroke:white
+    style Compilation fill:#59C3D5,color:white,stroke:white
+    style Deployment fill:#59C3D5,color:white,stroke:white
 
     linkStyle 0 stroke:white,stroke-width:3
     linkStyle 1 stroke:white,stroke-width:3
