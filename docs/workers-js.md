@@ -1,3 +1,6 @@
+---
+sidebar_position: 3
+---
 # Manage your first Worker in JavaScript !
 
 ## Code Examples
