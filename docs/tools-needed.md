@@ -5,19 +5,44 @@ sidebar_position: 2
 
 ## Wrangler CLI
 
-To begin, you will need to have [Node.js](https://nodejs.dev) installed on your machine.
-Once Node.js is successfully installed, you can proceed by installing the [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/) 
-using the following command:
+To get started with Cloudflare Workers using the Wrangler CLI, follow these steps:
 
-```bash
-npm i -g wrangler # or `yarn global add wrangler` if you prefer yarn
-```
+1. Ensure you have [Node.js](https://nodejs.dev) installed on your computer, and Kubernetes client installed like 
+[colima](https://github.com/abiosoft/colima), [kind](https://github.com/kubernetes-sigs/kind) 
 
-Wrangler is a command-line interface (CLI) developed by Cloudflare to facilitate the management of your project on their
-servers. It ensures compatibility through an API that was reverse-engineered based on the Cloudflare API. The objective
-is to provide a consistent set of tools for developing Workers across all platforms.
+2. Install the Wrangler CLI by executing either of the following commands, depending on your package manager preference:
 
-Once Wrangler installed, you need to login to Cloudflare Workers, so run `wrangler login` and then run `wrangler whoami` 
-and keep the Account ID provided by cloudflare.
+    Using npm:
+    ```bash
+    npm i -g wrangler
+    ```
+    
+    Using yarn:
+    ```bash
+    yarn global add wrangler
+    ```
 
-With the Account ID provided by cloudflare, use it to create a `WorkerAccount` in the kubernetes cluster.
+    Wrangler is a powerful command-line interface (CLI) developed by Cloudflare for managing your projects on their servers.
+    It provides a consistent set of tools for developing Workers across all platforms. It ensures compatibility by 
+    reverse-engineering the Cloudflare API.
+
+3. After installing Wrangler, you need to log in to Cloudflare Workers by running the following command and following the 
+instructions given:
+   ```bash
+   wrangler login
+   ```
+
+4. Once you are logged in, retrieve your Account ID by running the command:
+   ```bash
+   wrangler whoami
+   ```
+
+5. Copy and paste the Account ID into [this WorkerAccount configuration file](https://github.com/clementreiffers/cf-workers-kubernetes-arch/blob/main/config/samples/api_v1_workeraccount.yaml).
+
+6. Apply the Kubernetes resource to your cluster using the following command:
+   ```bash
+   kubectl apply -f api_v1_workeraccount.yaml
+   ```
+
+With these steps completed, you are now ready to develop and deploy Cloudflare Workers using the Wrangler CLI. Happy 
+coding!
