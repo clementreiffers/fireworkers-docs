@@ -115,7 +115,7 @@ Run: `kubectl apply -f https://raw.githubusercontent.com/clementreiffers/fake-cf
 
 ## Usage
 
-You need to Login before create your very first Octo Worker, to do so, go to [the Wrangler CLI login](#/docs/tools-needed#wrangler-cli) 
+You need to Login before create your very first FireWorker, to do so, go to [the Wrangler CLI login](#/docs/tools-needed#wrangler-cli) 
 and come back here.
 
 you need a file that you can curl here : `curl -O -L https://raw.githubusercontent.com/clementreiffers/cf-workers-kubernetes-arch/main/config/samples/api_v1_workeraccount.yaml`

@@ -4,20 +4,18 @@
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
-const octoLogo =
-  "https://www.myeventnetwork.com/sites/default/files/styles/open_graph/public/2019-07/Octo-logo.jpg?itok=TfC6hR9x";
-
+const fireWorkers = "/img/fire-svgrepo-com.svg";
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Octo Workers",
-  tagline: "The Workerd on premise",
-  favicon: octoLogo,
+  title: "FireWorkers",
+  tagline: "Let's fire a worker!",
+  favicon: fireWorkers,
 
   // Set the production url of your site here
   url: "https://clementreiffers.github.io",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: "/octo-workers-docs",
+  baseUrl: "/fire-workers-docs",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -61,12 +59,12 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: octoLogo,
+      image: fireWorkers,
       navbar: {
-        title: "Octo Worker",
+        title: "FireWorkers",
         logo: {
-          alt: "Octo Technology",
-          src: octoLogo,
+          alt: "FireWorker logo",
+          src: fireWorkers,
         },
         items: [
           {
@@ -78,7 +76,7 @@ const config = {
           { to: "/blog", label: "Blog", position: "left" },
           {
             label: "GitHub",
-            to: "/blog/Octo%20Workers#repositories",
+            to: "/blog/FireWorkers#repositories",
             position: "right",
           },
         ],
