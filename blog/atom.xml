@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://clementreiffers.github.io/fire-workers-docs/blog</id>
+    <id>https://clementreiffers.github.io/fireworkers-docs/blog</id>
     <title>FireWorkers Blog</title>
     <updated>2021-08-26T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://clementreiffers.github.io/fire-workers-docs/blog"/>
+    <link rel="alternate" href="https://clementreiffers.github.io/fireworkers-docs/blog"/>
     <subtitle>FireWorkers Blog</subtitle>
-    <icon>https://clementreiffers.github.io/fire-workers-docs/img/fire-svgrepo-com.svg</icon>
+    <icon>https://clementreiffers.github.io/fireworkers-docs/img/fire-svgrepo-com.svg</icon>
     <entry>
         <title type="html"><![CDATA[FireWorkers]]></title>
-        <id>https://clementreiffers.github.io/fire-workers-docs/blog/FireWorkers</id>
-        <link href="https://clementreiffers.github.io/fire-workers-docs/blog/FireWorkers"/>
+        <id>https://clementreiffers.github.io/fireworkers-docs/blog/FireWorkers</id>
+        <link href="https://clementreiffers.github.io/fireworkers-docs/blog/FireWorkers"/>
         <updated>2021-08-26T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Why This Project? What's Next?]]></summary>
         <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="why-this-project-whats-next">Why This Project? What's Next?<a href="#why-this-project-whats-next" class="hash-link" aria-label="Direct link to Why This Project? What's Next?" title="Direct link to Why This Project? What's Next?">​</a></h2><p>This project was undertaken during an internship with the aim of addressing the question: "Does the recent release of

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[475],{160:e=>{e.exports=JSON.parse('{"label":"github","permalink":"/fireworkers-docs/blog/tags/github","allTagsPath":"/fireworkers-docs/blog/tags","count":1}')}}]);
